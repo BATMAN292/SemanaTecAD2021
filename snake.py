@@ -12,8 +12,8 @@ from random import randrange
 from freegames import square, vector
 
 food = vector(0, 10)
-snake = [vector(0, 10)]
-aim = vector(0, -10)
+snake = [vector(0, -140)]
+aim = vector(0, 10)
 color = randrange(1,3)
 
 def change(x, y):
@@ -22,16 +22,29 @@ def change(x, y):
     aim.y = y
 
 def inside(head):
-    "Return True if head inside boundaries."
-    aux = 0
+     "Return True if head inside boundaries."
+     return -200 < head.x < 190 and -200 < head.y < 190
 
-    if -180 < head.x < 190:
-        aux = aux + 1
-    
-    if -200 < head.y < 190:
-        aux = aux + 1
-    
-    if aux == 2:
+def obstacles(head):
+    if head.x < -50 and head.y < -170:
+        return False
+    if head.x > 30 and head.y < -170:
+        return False
+    if head.x < -50 and head.y > 170:
+        return False
+    if head.x > 30 and head.y > 170:
+        return False
+    if head.x < -180 and head.y > 90:
+        return False
+    if head.x < -180 and head.y < -80:
+        return False
+    if head.x > 160 and head.y > 90:
+        return False
+    if head.x > 160 and head.y < -80:
+        return False
+    if -80 < head.x < 70 and -10 < head.y < 40:
+        return False
+    else:
         return True
 
 def switch_side(head):
@@ -49,7 +62,7 @@ def move():
     head = snake[-1].copy()
     head.move(aim)
 
-    if  head in snake or not inside(head):
+    if  head in snake or not obstacles(head):
         square(head.x, head.y, 9, 'red')
         update()
         return
@@ -80,11 +93,11 @@ def move():
     wall_h = square(170, -280, 200,'black')
     wall_i = square(170, 100, 200,'black')
 
-    center_a = square(0,0,30,'black')
-    center_b = square(-30,0,30,'black')
-    center_c = square(-40,0,30,'black')
-    center_d = square(30,0,30,'black')
-    center_e = square(-70,0,30,'black')
+    center_a = square(0,0,40,'black')
+    center_b = square(-30,0,40,'black')
+    center_c = square(-40,0,40,'black')
+    center_d = square(30,0,40,'black')
+    center_e = square(-70,0,40,'black')
 
     if color == 1:
         for body in snake:
