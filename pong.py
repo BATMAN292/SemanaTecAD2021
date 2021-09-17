@@ -17,12 +17,14 @@ def value():
     "Randomly generate value between (-5, -3) or (3, 5)."
     return (3 + random() * 2) * choice([1, -1])
 
+"valores de inicio"
 ball = vector(0, 0)
-ball2 = vector(100, 50)
+ball2 = vector(10, 10)
 aim = vector(value(), value())
 "aim2 = vector(value(), value())"
 state = {1: 0, 2: 0}
 
+"Color de los rectángulos"
 c = randrange(1,4)
 if c==1:
     col='red'
@@ -57,6 +59,7 @@ def draw():
     rectangle(-200, state[1], 10, 50)
     rectangle(190, state[2], 10, 50)
 
+    "Crear 2 pelotas (aún no funciona)"
     ball.move(aim)
     x = ball.x
     y = ball.y
@@ -67,10 +70,11 @@ def draw():
 
     up()
     goto(x, y)
-    a = dot(10)
-    b = dot(10)
+    dot(10)
+    dot(10)
     update()
 
+    "Rebote de la pelota"
     if y < -200 or y > 200:
         aim.y = -aim.y
 
@@ -92,12 +96,15 @@ def draw():
         else:
             return
 
+    "Velocidad del juego"
     ontimer(draw, 60)
 
 setup(420, 420, 370, 0)
 hideturtle()
 tracer(False)
 listen()
+
+"Teclas utilizadas para el movimiento de las barras"
 onkey(lambda: move(1, 20), 'w')
 onkey(lambda: move(1, -20), 's')
 onkey(lambda: move(2, 20), 'i')
