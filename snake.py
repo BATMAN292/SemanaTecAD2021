@@ -1,11 +1,5 @@
-"""Snake, classic arcade game.
-
-Exercises
-
-1. How do you make the snake faster or slower?
-2. How can you make the snake go around the edges?
-3. How would you move the food?
-4. Change the snake to respond to arrow keys.
+"""
+Juego de Snake
 
 """
 
@@ -17,6 +11,7 @@ food = vector(0, 10)
 snake = [vector(0, 10)]
 aim = vector(0, -10)
 
+color = randrange(1,3)
 
 
 def change(x, y):
@@ -69,8 +64,15 @@ def move():
 
     clear()
 
-    for body in snake:
-        square(body.x, body.y, 9, 'black')
+    if color == 1:
+        for body in snake:
+            square(body.x, body.y, 9, 'yellow')
+    elif color == 2:
+        for body in snake:
+            square(body.x, body.y, 9, 'blue')
+    else:
+        for body in snake:
+            square(body.x, body.y, 9, 'black')
 
     if len(snake) % 2 == 0:
         food.x = food.x + 10
@@ -79,7 +81,9 @@ def move():
         
     square(food.x, food.y, 9, 'green')
     update()
-    ontimer(move, 60)
+    ontimer(head.move, 60)
+    ontimer(food.move, 60)
+
 
 setup(420, 420, 370, 0)
 hideturtle()
