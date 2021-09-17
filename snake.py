@@ -13,9 +13,11 @@ from turtle import *
 from random import randrange
 from freegames import square, vector
 
-food = vector(0, 0)
-snake = [vector(10, 0)]
+food = vector(0, 10)
+snake = [vector(0, 10)]
 aim = vector(0, -10)
+
+
 
 def change(x, y):
     "Change snake direction."
@@ -31,10 +33,30 @@ def move():
     head = snake[-1].copy()
     head.move(aim)
 
-    if not inside(head) or head in snake:
+    if  head in snake:
         square(head.x, head.y, 9, 'red')
         update()
         return
+
+    if not inside(head):
+        if head.x < -200:
+            head.x = head.x + 390 
+        if head.x > 190:
+            head.x = head.x - 390
+        if head.y < -200:
+            head.y = head.y + 390  
+        if head.y > 190:
+            head.y = head.y - 390  
+
+    if not inside(food):
+        if food.x < -200:
+            food.x = food.x + 390 
+        if food.x > 190:
+            food.x = food.x - 390
+        if food.y < -200:
+            food.y = food.y + 390  
+        if food.y > 190:
+            food.y = food.y - 390  
 
     snake.append(head)
 
@@ -50,9 +72,14 @@ def move():
     for body in snake:
         square(body.x, body.y, 9, 'black')
 
+    if len(snake) % 2 == 0:
+        food.x = food.x + 10
+    else:
+        food.y = food.y + 10 
+        
     square(food.x, food.y, 9, 'green')
     update()
-    ontimer(move, 100)
+    ontimer(move, 60)
 
 setup(420, 420, 370, 0)
 hideturtle()
