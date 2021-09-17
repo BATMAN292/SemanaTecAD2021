@@ -1,7 +1,5 @@
 """Pong, classic arcade game.
-
 Exercises
-
 1. Change the colors.
 2. What is the frame rate? Make it faster or slower.
 3. Change the speed of the ball.
@@ -9,10 +7,9 @@ Exercises
 5. Change how the ball bounces off walls.
 6. How would you add a computer player?
 6. Add a second ball.
-
 """
 
-from random import choice, random
+from random import choice, random, randrange
 from turtle import *
 from freegames import vector
 
@@ -24,6 +21,14 @@ ball = vector(0, 0)
 aim = vector(value(), value())
 state = {1: 0, 2: 0}
 
+c = randrange(1,3)
+if c==1:
+    col='red'
+elif c==2:
+    col='blue'
+elif c==3:
+    col='green'
+
 def move(player, change):
     "Move player position by change."
     state[player] += change
@@ -33,6 +38,7 @@ def rectangle(x, y, width, height):
     up()
     goto(x, y)
     down()
+    fillcolor(col)
     begin_fill()
     for count in range(2):
         forward(width)
@@ -64,7 +70,7 @@ def draw():
         high = state[1] + 50
 
         if low <= y <= high:
-            aim.x = -aim.x
+            aim.x = -aim.x 
         else:
             return
 
@@ -77,15 +83,15 @@ def draw():
         else:
             return
 
-    ontimer(draw, 50)
+    ontimer(draw, 60)
 
 setup(420, 420, 370, 0)
 hideturtle()
 tracer(False)
 listen()
-onkey(lambda: move(1, 20), 'w')
-onkey(lambda: move(1, -20), 's')
-onkey(lambda: move(2, 20), 'i')
-onkey(lambda: move(2, -20), 'k')
+onkey(lambda: move(1, 50), 'w')
+onkey(lambda: move(1, -50), 's')
+onkey(lambda: move(2, 50), 'i')
+onkey(lambda: move(2, -50), 'k')
 draw()
 done()

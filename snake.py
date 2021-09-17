@@ -1,31 +1,44 @@
-"""
-Juego de Snake
+# Juego de SNAKE
 
-"""
-"""
-Juego de Snake
+# LIBRERIAS
 
-"""
-
-from turtle import *
+from turtle import update, clear, ontimer, setup, \
+    hideturtle, tracer, listen, onkey, done
 from random import randrange
 from freegames import square, vector
 
+
+# VARIABLES DE POSICION INICIALES
 food = vector(0, 10)
 snake = [vector(0, -140)]
 aim = vector(0, 10)
-color = randrange(1,3)
+color = randrange(1, 3)
 
-def change(x, y):
-    "Change snake direction."
+
+# FUNCIONES
+
+
+def change(x, y):  # Cambia la dirección de la serpiente
     aim.x = x
     aim.y = y
 
-def inside(head):
-     "Return True if head inside boundaries."
-     return -200 < head.x < 190 and -200 < head.y < 190
 
-def obstacles(head):
+def inside(head):  # Checa que la serpiente este entre los limites
+    return -200 < head.x < 190 and -200 < head.y < 190
+
+
+def switch_side(head):  # Si la serpiente sale de limites cambia al otro lado
+    if head.x < -200:
+        head.x = head.x + 390
+    if head.x > 190:
+        head.x = head.x - 390
+    if head.y < -200:
+        head.y = head.y + 390
+    if head.y > 190:
+        head.y = head.y - 390
+
+
+def obstacles(head):  # Define los espacios en los que no se puede estar
     if head.x < -50 and head.y < -170:
         return False
     if head.x > 30 and head.y < -170:
@@ -47,22 +60,12 @@ def obstacles(head):
     else:
         return True
 
-def switch_side(head):
-    if head.x < -200:
-        head.x = head.x + 390 
-    if head.x > 190:
-        head.x = head.x - 390
-    if head.y < -200:
-        head.y = head.y + 390  
-    if head.y > 190:
-        head.y = head.y - 390  
 
-def move():
-    "Move snake forward one segment."
+def move():  # Funcion principal del programa
     head = snake[-1].copy()
     head.move(aim)
 
-    if  head in snake or not obstacles(head):
+    if head in snake or not obstacles(head):
         square(head.x, head.y, 9, 'red')
         update()
         return
@@ -84,20 +87,20 @@ def move():
 
     clear()
 
-    wall_a = square(-250, 180, 200,'black')
-    wall_b = square(40, 180, 200,'black')
-    wall_c = square(40, -370, 200,'black')
-    wall_d = square(-250, -370, 200,'black')
-    wall_e = square(-380, 100, 200,'black')
-    wall_f = square(-380, -280, 200,'black')
-    wall_h = square(170, -280, 200,'black')
-    wall_i = square(170, 100, 200,'black')
+    square(-250, 180, 200, 'black')
+    square(40, 180, 200, 'black')
+    square(40, -370, 200, 'black')
+    square(-250, -370, 200, 'black')
+    square(-380, 100, 200, 'black')
+    square(-380, -280, 200, 'black')
+    square(170, -280, 200, 'black')
+    square(170, 100, 200, 'black')
 
-    center_a = square(0,0,40,'black')
-    center_b = square(-30,0,40,'black')
-    center_c = square(-40,0,40,'black')
-    center_d = square(30,0,40,'black')
-    center_e = square(-70,0,40,'black')
+    square(0, 0, 40, 'black')
+    square(-30, 0, 40, 'black')
+    square(-40, 0, 40, 'black')
+    square(30, 0, 40, 'black')
+    square(-70, 0, 40, 'black')
 
     if color == 1:
         for body in snake:
@@ -112,12 +115,13 @@ def move():
     if len(snake) % 2 == 0:
         food.x = food.x + 10
     else:
-        food.y = food.y + 10 
-        
+        food.y = food.y + 10
     square(food.x, food.y, 9, 'green')
-    
     update()
     ontimer(move, 100)
+
+
+# GAME SETUP
 
 
 setup(420, 420, 370, 0)
