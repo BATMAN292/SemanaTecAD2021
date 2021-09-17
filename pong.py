@@ -17,8 +17,10 @@ def value():
     "Randomly generate value between (-5, -3) or (3, 5)."
     return (3 + random() * 2) * choice([1, -1])
 
-ball = vector(0, 0)
-aim = vector(value(), value())
+ball1 = vector(0, 0)
+ball2 = vector(0, 0)
+aim1 = vector(value(), value())
+aim2 = vector(value(), value())
 state = {1: 0, 2: 0}
 
 c = randrange(1,3)
@@ -53,33 +55,64 @@ def draw():
     rectangle(-200, state[1], 10, 50)
     rectangle(190, state[2], 10, 50)
 
-    ball.move(aim)
-    x = ball.x
-    y = ball.y
+    ball1.move(aim1)
+    x1 = ball1.x
+    y1 = ball1.y
+
+    ball2.move(aim2)
+    x2 = ball2.x
+    y2 = ball2.y
 
     up()
-    goto(x, y)
+    goto(x1, y1)
+    goto(x2, y2)
     dot(10)
     update()
 
-    if y < -200 or y > 200:
-        aim.y = -aim.y
+    if y1 < -200 or y1 > 200:
+        aim1.y = -aim1.y
 
-    if x < -185:
+    if x1 < -185:
         low = state[1]
         high = state[1] + 50
 
-        if low <= y <= high:
-            aim.x = -aim.x 
+        if low <= y1 <= high:
+            aim1.x = -aim1.x
         else:
             return
 
-    if x > 185:
+    if x1 > 185:
         low = state[2]
         high = state[2] + 50
 
+        if low <= y1 <= high:
+            aim1.x = -aim1.x
+        else:
+            return
+
+    if y2 < -200 or y2 > 200:
+        aim2.y = -aim2.y
+
+    if x2 < -185:
+        low = state[1]
+        high = state[1] + 50
+
+<<<<<<< HEAD
         if low <= y <= high:
-            aim.x = -aim.x
+            aim.x = -aim.x 
+=======
+        if low <= y2 <= high:
+            aim2.x = -aim2.x
+>>>>>>> d837088ae191236e37fac1d1b49cced0c3f59525
+        else:
+            return
+
+    if x2 > 185:
+        low = state[2]
+        high = state[2] + 50
+
+        if low <= y2 <= high:
+            aim2.x = -aim2.x
         else:
             return
 
@@ -94,4 +127,9 @@ onkey(lambda: move(1, -50), 's')
 onkey(lambda: move(2, 50), 'i')
 onkey(lambda: move(2, -50), 'k')
 draw()
+<<<<<<< HEAD
 done()
+=======
+done()
+
+>>>>>>> d837088ae191236e37fac1d1b49cced0c3f59525
